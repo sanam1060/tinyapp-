@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/sanam1060/tinyapp-/issues"
   },
-  "homepage": "https://github.com/sanam1060/tinyapp-#readme"
+  "homepage": "https://github.com/sanam1060/tinyapp-#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
