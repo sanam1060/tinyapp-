@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -8,9 +14,8 @@
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous"
     />
-    <title>URL - TinyApp Example</title>
+    <title>TinyApp</title>
   </head>
-
   <body>
     <header>
       <nav class="navbar navbar-expand-md navbar-dark bg-success">
@@ -34,21 +39,28 @@
         </div>
       </nav>
     </header>
-    <div class="card text-center">
-      <div class="card-header"></div>
-      <div class="card-body">
-        <h5 class="card-title">TinyURL for: <%= longURL %></h5>
-        <p class="card-text">
-          Short URL: <a href="/u/<%= shortURL %>"><%= shortURL %></a>
-        </p>
-        <form method="POST" action="/urls/<%= shortURL %>">
-          <label for="updateURL">New URL:</label>
-          <input type="text" value="<%=longURL%>" name="longURL" />
-          <button type="Submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
-      <div class="card-footer text-muted"></div>
-    </div>
+    <main style="margin: 1em">
+      <h3>Registeration</h3>
+      <form method="POST" action="\register"></form>
+      <form method="POST" action="\register">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          style="width: 300px; margin: 1em"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          style="width: 300px; margin: 1em"
+        />
+        <button type="Submit" class="btn btn-primary">Submit</button>
+      </form>
+      <table class="table">
+        <tbody></tbody>
+      </table>
+    </main>
     <!-- Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
