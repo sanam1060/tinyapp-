@@ -28,7 +28,7 @@ app.set("view engine", "ejs");
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2']
-}))
+}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -225,7 +225,7 @@ app.post("/register", (req, res) => {
   return res.redirect("/urls");
 });
 
-const checkEmail = function (emailTemp) {
+const checkEmail = function(emailTemp) {
   for (let key of Object.keys(users)) {
     console.log(users[key]);
     if (users[key].email === emailTemp) {
@@ -238,7 +238,7 @@ const checkEmail = function (emailTemp) {
 
 
 
-const urlsForUser = function (id) {
+const urlsForUser = function(id) {
   let idUrls = {};
   for (let url of Object.keys(urlDatabase)) {
     if (urlDatabase[url].userID === id) {
