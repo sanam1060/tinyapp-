@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 const bcrypt = require('bcryptjs');
+const getUserByEmail = require('../tinyapp/helpers').getUserByEmail;
 const users = {
   userRandomID: {
     id: "userRandomID",
@@ -19,6 +20,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const { redirect } = require("statuses");
 const cookieSession = require("cookie-session");
+const helpers = require("./helpers");
 
 app.set("view engine", "ejs");
 
@@ -56,7 +58,6 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  console.log("user_id", req.session);
   let emailtemp = {};
   if (users[req.session["user_id"]]) {
     emailtemp = users[req.session["user_id"]].email;
@@ -165,24 +166,37 @@ app.post("/login", (req, res) => {
   const passUsr = req.body.password;
   console.log(emailUsr, "userEmail");
   if (checkEmail(emailUsr)) {
-    for (let key of Object.keys(users)) {
-      // console.log(users[key]);
-      if (users[key].email === emailUsr) {
-        if (bcrypt.compareSync(passUsr, users[key].password)) {
-        // if (users[key].password === passUsr) {
-          // res.cookie("user_id", users[key].id);
-          req.session.user_id = users[key].id;
-        } else {
-          return res.status(403).end();
-        }
-      }
+    let user = getUserByEmail(emailUsr,users);
+    if (bcrypt.compareSync(passUsr, user.password)) {
+      req.session.user_id = user.id;
+    } else {
+      return res.status(403).end();
     }
   } else {
     return res.status(403).end();
   }
-  // res.cookie("username", typedName);
   res.redirect("/urls");
 });
+
+
+//     for (let key of Object.keys(users)) {
+//       // console.log(users[key]);
+//       if (users[key].email === emailUsr) {
+//         if (bcrypt.compareSync(passUsr, users[key].password)) {
+//         // if (users[key].password === passUsr) {
+//           // res.cookie("user_id", users[key].id);
+//           req.session.user_id = users[key].id;
+//         } else {
+//           return res.status(403).end();
+//         }
+//       }
+//     }
+//   } else {
+//     return res.status(403).end();
+//   }
+//   // res.cookie("username", typedName);
+//   res.redirect("/urls");
+// });
 
 app.post("/logout", (req, res) => {
   // console.log("logout");
@@ -222,13 +236,6 @@ const checkEmail = function (emailTemp) {
   return false;
 };
 
-const getUserByEmail = function(email, database) {
-  for (let key of Object.keys(database)) {
-    if (database[key].email === email) {
-      return database[key];
-    }
-  }
-};
 
 
 const urlsForUser = function (id) {
